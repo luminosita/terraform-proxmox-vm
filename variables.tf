@@ -18,7 +18,7 @@ variable "nodes" {
     ip             = string
     mac_address    = string
     network_device = optional(string, "vmbr0")
-    vlan_id        = optional(string, "")
+    vlan_id        = optional(number)
     vm_id          = number
     cpu            = number
     ram_dedicated  = number
