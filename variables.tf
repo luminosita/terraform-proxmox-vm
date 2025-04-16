@@ -12,16 +12,18 @@ variable "image" {
 variable "nodes" {
   description = "Configuration for cluster nodes"
   type = map(object({
-    host_node     = string
-    machine_type  = string
-    datastore_id  = string
-    ip            = string
-    mac_address   = string
-    vm_id         = number
-    cpu           = number
-    ram_dedicated = number
-    update        = optional(bool, false)
-    igpu          = optional(bool, false)
+    host_node      = string
+    machine_type   = string
+    datastore_id   = string
+    ip             = string
+    mac_address    = string
+    network_device = optional(string, "vmbr0")
+    vlan_id        = optional(string, "")
+    vm_id          = number
+    cpu            = number
+    ram_dedicated  = number
+    update         = optional(bool, false)
+    igpu           = optional(bool, false)
   }))
 }
 

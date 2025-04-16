@@ -5,8 +5,8 @@ resource "proxmox_virtual_environment_download_file" "this" {
   content_type = "iso"
   datastore_id = var.image.datastore_id
 
-  file_name               = "${each.value.update ? var.image.file_name_update : var.image.file_name}"
-  url                     = "${each.value.update ? var.image.url_update : var.image.url}"
+  file_name               = each.value.update ? var.image.file_name_update : var.image.file_name
+  url                     = each.value.update ? var.image.url_update : var.image.url
   decompression_algorithm = "gz"
   overwrite               = false
 }
@@ -40,8 +40,9 @@ resource "proxmox_virtual_environment_vm" "this" {
   }
 
   network_device {
-    bridge      = "vmbr0"
+    bridge      = each.value.network_device
     mac_address = each.value.mac_address
+    vlan_id     = each.value.vlan_id
   }
 
   disk {
@@ -67,11 +68,11 @@ resource "proxmox_virtual_environment_vm" "this" {
 
     # Optional DNS Block.  Update Nodes with a list value to use.
     dynamic "dns" {
-       for_each = try(each.value.dns, null) != null ? { "enabled" = each.value.dns } : {}
-       content {
-         servers = each.value.dns
-       }
-     }
+      for_each = try(each.value.dns, null) != null ? { "enabled" = each.value.dns } : {}
+      content {
+        servers = each.value.dns
+      }
+    }
 
     ip_config {
       ipv4 {
