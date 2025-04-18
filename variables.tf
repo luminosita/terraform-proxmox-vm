@@ -17,6 +17,8 @@ variable "nodes" {
     datastore_id   = string
     ip             = optional(string)
     mac_address    = string
+    gateway        = optional(string)
+    subnet_mask    = optional(string, "24")
     network_device = optional(string, "vmbr0")
     vlan_id        = optional(number)
     vm_id          = number
@@ -25,11 +27,4 @@ variable "nodes" {
     update         = optional(bool, false)
     igpu           = optional(bool, false)
   }))
-}
-
-variable "network" {
-  type = object({
-    gateway     = string
-    subnet_mask = optional(string, "24")
-  })
 }
