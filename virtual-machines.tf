@@ -76,9 +76,8 @@ resource "proxmox_virtual_environment_vm" "this" {
 
     ip_config {
       ipv4 {
-        # address = "${each.value.ip}/${var.network.subnet_mask}"
-        # gateway = var.network.gateway
-        address = "dhcp"
+        address = each.value.ip != "" ? "${each.value.ip}/${var.network.subnet_mask}" : "dhcp"
+        gateway = each.value.ip != "" ? var.network.gateway : ""
       }
     }
   }

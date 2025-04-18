@@ -15,7 +15,7 @@ variable "nodes" {
     host_node      = string
     machine_type   = string
     datastore_id   = string
-    ip             = string
+    ip             = optional(string)
     mac_address    = string
     network_device = optional(string, "vmbr0")
     vlan_id        = optional(number)
