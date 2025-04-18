@@ -40,9 +40,9 @@ resource "proxmox_virtual_environment_vm" "this" {
   }
 
   network_device {
-    bridge      = each.value.network_device
-    mac_address = each.value.mac_address
-    vlan_id     = each.value.vlan_id
+    bridge      = each.value.network.device
+    mac_address = each.value.network.mac_address
+    vlan_id     = each.value.network.vlan_id
   }
 
   disk {
@@ -68,16 +68,16 @@ resource "proxmox_virtual_environment_vm" "this" {
 
     # Optional DNS Block.  Update Nodes with a list value to use.
     dynamic "dns" {
-      for_each = try(each.value.dns, null) != null ? { "enabled" = each.value.dns } : {}
+      for_each = try(each.value.network.dns, null) != null ? { "enabled" = each.value.network.dns } : {}
       content {
-        servers = each.value.dns
+        servers = each.value.network.dns
       }
     }
 
     ip_config {
       ipv4 {
-        address = each.value.ip != null ? "${each.value.ip}/${each.value.subnet_mask}" : "dhcp"
-        gateway = each.value.ip != null ? each.value.gateway : null
+        address = each.value.network.dhcp ? "dhcp": "${each.value.network.ip}/${each.value.network.subnet_mask}"
+        gateway = each.value.network.dhcp ? null : each.value.network.gateway
       }
     }
   }
