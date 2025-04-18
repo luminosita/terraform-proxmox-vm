@@ -76,8 +76,8 @@ resource "proxmox_virtual_environment_vm" "this" {
 
     ip_config {
       ipv4 {
-        address = each.value.ip != "" ? "${each.value.ip}/${var.network.subnet_mask}" : "dhcp"
-        gateway = each.value.ip != "" ? var.network.gateway : ""
+        address = each.value.ip != null ? "${each.value.ip}/${var.network.subnet_mask}" : "dhcp"
+        gateway = each.value.ip != null ? var.network.gateway : null
       }
     }
   }
