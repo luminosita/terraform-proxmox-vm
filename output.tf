@@ -3,6 +3,6 @@ locals {
 }
 
 output "ipv4_addresses" {
-  value = { for k in proxmox_virtual_environment_vm.this : k.name => { for iface in local.indexes[k.name] : iface => k.ipv4_addresses[local.indexes[k.name][iface]] }}
+  value = { for k in proxmox_virtual_environment_vm.this : k.name => { for iface_key, iface_value in local.indexes[k.name] : iface_key => k.ipv4_addresses[iface_value] }}
 }
 
