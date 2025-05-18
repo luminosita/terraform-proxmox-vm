@@ -1,18 +1,18 @@
 resource "proxmox_virtual_environment_download_file" "this" {
-  for_each = var.nodes
+  for_each = var.talos_nodes
 
   node_name    = each.value.host_node
   content_type = "iso"
-  datastore_id = var.image.datastore_id
+  datastore_id = var.talos_image.datastore_id
 
-  file_name               = each.value.update ? var.image.file_name_update : var.image.file_name
-  url                     = each.value.update ? var.image.url_update : var.image.url
+  file_name               = each.value.update ? var.talos_image.file_name_update : var.talos_image.file_name
+  url                     = each.value.update ? var.talos_image.url_update : var.talos_image.url
   decompression_algorithm = "gz"
   overwrite               = false
 }
 
 resource "proxmox_virtual_environment_vm" "this" {
-  for_each = var.nodes
+  for_each = var.talos_nodes
 
   node_name = each.value.host_node
 

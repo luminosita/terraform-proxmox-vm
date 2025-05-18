@@ -1,4 +1,4 @@
-variable "image" {
+variable "talos_image" {
   description = "Talos image configuration"
   type = object({
     file_name        = string
@@ -9,7 +9,7 @@ variable "image" {
   })
 }
 
-variable "nodes" {
+variable "talos_nodes" {
   description = "Configuration for cluster nodes"
   type = map(object({
     host_node    = string
